@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:marcheappadmi/db/brand.dart';
+import 'package:marcheappadmi/db/category.dart';
 
 enum Page { dashboard, manage }
 
@@ -16,6 +19,8 @@ class _AdminPanelState extends State<AdminPanel> {
   TextEditingController brandController = TextEditingController();
   GlobalKey<FormState> _categoryFormKey = GlobalKey();
   GlobalKey<FormState> _brandFormKey = GlobalKey();
+  BrandService _brandService = BrandService();
+  CategoryService _categoryService = CategoryService();
 
   @override
   Widget build(BuildContext context) {
@@ -266,15 +271,19 @@ class _AdminPanelState extends State<AdminPanel> {
       actions: <Widget>[
         FlatButton(
           onPressed: () {
+            if (categoryController.text != null) {
+              _categoryService.createCategory(categoryController.text);
+            }
+            Fluttertoast.showToast(msg: 'category created');
             Navigator.pop(context);
           },
-          child: Text("Add"),
+          child: Text("ADD"),
         ),
         FlatButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("Cancel"),
+          child: Text("CANCEL"),
         ),
       ],
     );
@@ -287,7 +296,7 @@ class _AdminPanelState extends State<AdminPanel> {
       content: Form(
         key: _brandFormKey,
         child: TextFormField(
-          controller: categoryController,
+          controller: brandController,
           validator: (value) {
             if (value.isEmpty) {
               return 'category cannot be empty';
@@ -303,6 +312,10 @@ class _AdminPanelState extends State<AdminPanel> {
       actions: <Widget>[
         FlatButton(
           onPressed: () {
+            if (brandController.text != null) {
+              _brandService.createBrand(brandController.text);
+            }
+            Fluttertoast.showToast(msg: 'Brand created');
             Navigator.pop(context);
           },
           child: Text("Add"),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcheappadmi/screens.dart';
+import 'package:marcheappadmi/screens/admin.dart';
 
 void main() {
   runApp(
