@@ -10,6 +10,6 @@ class CategoryService {
     _firestore
         .collection("Categories")
         .document(categoryId)
-        .setData({'categoryName': name});
+        .setData({'category': name});
   }
 }
