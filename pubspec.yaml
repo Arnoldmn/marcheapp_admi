@@ -27,6 +27,12 @@ dependencies:
   google_sign_in: ^4.5.1
   shared_preferences: ^0.5.7+3
   fluttertoast: ^4.0.1
+  image_picker: ^0.6.7
+  cached_network_image: ^2.2.0+1
+  intl: ^0.16.1
+  uuid: ^2.0.4
+
+
 
 dev_dependencies:
   flutter_test:
