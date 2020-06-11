@@ -83,7 +83,7 @@ class _AdminPanelState extends State<AdminPanel> {
                     crossAxisCount: 2),
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(18.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Card(
                       child: ListTile(
                         title: FlatButton.icon(
@@ -99,12 +99,12 @@ class _AdminPanelState extends State<AdminPanel> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(18.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Card(
                       child: ListTile(
                         title: FlatButton.icon(
                             onPressed: null,
-                            icon: Icon(Icons.people_outline),
+                            icon: Icon(Icons.category),
                             label: Text('Categories')),
                         subtitle: Text(
                           '23',
@@ -114,11 +114,126 @@ class _AdminPanelState extends State<AdminPanel> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ListTile(
+                        title: FlatButton.icon(
+                            onPressed: null,
+                            icon: Icon(Icons.track_changes),
+                            label: Text('Products')),
+                        subtitle: Text(
+                          '120',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: active, fontSize: 60.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ListTile(
+                        title: FlatButton.icon(
+                            onPressed: null,
+                            icon: Icon(Icons.tag_faces),
+                            label: Text('Sold')),
+                        subtitle: Text(
+                          '13',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: active, fontSize: 60.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ListTile(
+                        title: FlatButton.icon(
+                            onPressed: null,
+                            icon: Icon(Icons.shopping_cart),
+                            label: Text('Orders')),
+                        subtitle: Text(
+                          '5',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: active, fontSize: 60.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ListTile(
+                        title: FlatButton.icon(
+                            onPressed: null,
+                            icon: Icon(Icons.close),
+                            label: Text('Products')),
+                        subtitle: Text(
+                          '0',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: active, fontSize: 60.0),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
           ],
         );
+        break;
+      case Page.manage:
+        return ListView(
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.add),
+              title: Text("Add product"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.change_history),
+              title: Text("Products list"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.add),
+              title: Text("Add product"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.add_circle),
+              title: Text("Add category"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.category),
+              title: Text("Category List"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.add_circle_outline),
+              title: Text("Add brand"),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.library_books),
+              title: Text("Brand list"),
+              onTap: () {},
+            ),
+            Divider(),
+          ],
+        );
+        break;
+      default:
+        return Container();
     }
   }
 }
