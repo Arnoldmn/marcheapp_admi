@@ -12,6 +12,10 @@ class _AdminPanelState extends State<AdminPanel> {
   Page _selectedPage = Page.dashboard;
   MaterialColor active = Colors.deepOrange;
   MaterialColor notActive = Colors.grey;
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController brandController = TextEditingController();
+  GlobalKey<FormState> _categoryFormKey = GlobalKey();
+  GlobalKey<FormState> _brandFormKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +173,7 @@ class _AdminPanelState extends State<AdminPanel> {
                         title: FlatButton.icon(
                             onPressed: null,
                             icon: Icon(Icons.close),
-                            label: Text('Products')),
+                            label: Text('Return')),
                         subtitle: Text(
                           '0',
                           textAlign: TextAlign.center,
@@ -208,7 +212,9 @@ class _AdminPanelState extends State<AdminPanel> {
             ListTile(
               leading: Icon(Icons.add_circle),
               title: Text("Add category"),
-              onTap: () {},
+              onTap: () {
+                _categoryAlert();
+              },
             ),
             Divider(),
             ListTile(
@@ -220,7 +226,9 @@ class _AdminPanelState extends State<AdminPanel> {
             ListTile(
               leading: Icon(Icons.add_circle_outline),
               title: Text("Add brand"),
-              onTap: () {},
+              onTap: () {
+                _brandAlert();
+              },
             ),
             Divider(),
             ListTile(
@@ -235,5 +243,79 @@ class _AdminPanelState extends State<AdminPanel> {
       default:
         return Container();
     }
+  }
+
+  void _categoryAlert() {
+    var alert = new AlertDialog(
+      content: Form(
+        key: _categoryFormKey,
+        child: TextFormField(
+          controller: categoryController,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'category cannot be empty';
+            } else {
+              return null;
+            }
+          },
+          decoration: InputDecoration(
+            hintText: 'Add category',
+          ),
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Add"),
+        ),
+        FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+      ],
+    );
+
+    showDialog(context: context, builder: (_) => alert);
+  }
+
+  void _brandAlert() {
+    var alert = new AlertDialog(
+      content: Form(
+        key: _brandFormKey,
+        child: TextFormField(
+          controller: categoryController,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'category cannot be empty';
+            } else {
+              return null;
+            }
+          },
+          decoration: InputDecoration(
+            hintText: 'Add brand',
+          ),
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Add"),
+        ),
+        FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+      ],
+    );
+
+    showDialog(context: context, builder: (_) => alert);
   }
 }
