@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:marcheappadmi/db/brand.dart';
 import 'package:marcheappadmi/db/category.dart';
+import 'package:marcheappadmi/screens/add_product.dart';
 
 enum Page { dashboard, manage }
 
@@ -197,12 +198,6 @@ class _AdminPanelState extends State<AdminPanel> {
         return ListView(
           children: <Widget>[
             ListTile(
-              leading: Icon(Icons.add),
-              title: Text("Add product"),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
               leading: Icon(Icons.change_history),
               title: Text("Products list"),
               onTap: () {},
@@ -211,7 +206,14 @@ class _AdminPanelState extends State<AdminPanel> {
             ListTile(
               leading: Icon(Icons.add),
               title: Text("Add product"),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AddProduct(),
+                  ),
+                );
+              },
             ),
             Divider(),
             ListTile(
