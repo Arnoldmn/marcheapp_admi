@@ -12,9 +12,16 @@ class BrandService {
     _firestore.collection(ref).document(brandId).setData({'brand': name});
   }
 
-  Future<List<DocumentSnapshot>> getBrands() {
-    return _firestore.collection(ref).getDocuments().then((snaps) {
-      return snaps.documents;
-    });
-  }
+  Future<List<DocumentSnapshot>> brandsList() =>
+      _firestore.collection(ref).getDocuments().then((snaps) {
+        return snaps.documents;
+      });
+
+  Future<List<DocumentSnapshot>> getSuggestion(String suggestion) => _firestore
+          .collection(ref)
+          .where('brand', isEqualTo: suggestion)
+          .getDocuments()
+          .then((snap) {
+        return snap.documents;
+      });
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../db/category.dart';
 import '../db/brand.dart';
 
@@ -31,18 +32,24 @@ class _AddProductState extends State<AddProduct> {
   @override
   void initState() {
     _getCategories();
-    categoriesDropDown = getCategoriesDropdown();
+    _getBrands();
+    getCategoriesDropdown();
+//    _currentCategory = categoriesDropDown[0].value;
   }
 
-  List<DropdownMenuItem<String>> getCategoriesDropdown() {
+  getCategoriesDropdown() {
     List<DropdownMenuItem<String>> items = new List();
-    for (DocumentSnapshot category in categories) {
-      items.add(new DropdownMenuItem(
-        child: Text(category['category']),
-        value: category['category'],
-      ));
+    for (int i = 0; i < categories.length; i++) {
+      setState(() {
+        categoriesDropDown.insert(
+          0,
+          DropdownMenuItem(
+            child: Text(categories[i]['category']),
+            value: categories[i]['category'],
+          ),
+        );
+      });
     }
-    return items;
   }
 
   @override
@@ -62,7 +69,7 @@ class _AddProductState extends State<AddProduct> {
       ),
       body: Form(
         key: _formKey,
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -152,7 +159,113 @@ class _AddProductState extends State<AddProduct> {
                   }
                 },
               ),
-            )
+            ),
+            /** SELECT CATEGORY **/
+            Visibility(
+              visible: _currentCategory != null,
+              child: InkWell(
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: deepOraange,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          _currentCategory,
+                          style: TextStyle(color: white),
+                        ),
+                      ),
+                      IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _currentCategory = '';
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TypeAheadField(
+                textFieldConfiguration: TextFieldConfiguration(
+                    autofocus: false,
+                    decoration: InputDecoration(
+                        hintText: 'Add category',
+                        border: OutlineInputBorder())),
+                suggestionsCallback: (pattern) async {
+                  return await categoryService.getSuggestion(pattern);
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    leading: Icon(Icons.category),
+                    title: Text(suggestion['category']),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  _currentCategory = suggestion;
+                },
+              ),
+            ),
+            /** SELECT BRAND **/
+            Visibility(
+              visible: _currentBrand != null,
+              child: InkWell(
+                child: Material(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: deepOraange,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          _currentBrand,
+                          style: TextStyle(color: white),
+                        ),
+                      ),
+                      IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _currentBrand = '';
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TypeAheadField(
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: 'Add brand',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                suggestionsCallback: (pattern) async {
+                  return await brandService.getSuggestion(pattern);
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    leading: Icon(Icons.branding_watermark),
+                    title: Text(suggestion['brand']),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  _currentBrand = suggestion;
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -160,9 +273,20 @@ class _AddProductState extends State<AddProduct> {
   }
 
   void _getCategories() async {
-    List<DocumentSnapshot> data = await categoryService.getCategories();
+    List<DocumentSnapshot> data = await categoryService.categoriesList();
     setState(() {
       categories = data;
+    });
+  }
+
+  changeSelectedCategory(String selectedCategory) {
+    setState(() => _currentCategory = selectedCategory);
+  }
+
+  void _getBrands() async {
+    List<DocumentSnapshot> data = await brandService.brandsList();
+    setState(() {
+      brands = data;
     });
   }
 }

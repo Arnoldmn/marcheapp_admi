@@ -48,7 +48,7 @@ class _AdminPanelState extends State<AdminPanel> {
                 },
                 icon: Icon(
                   Icons.sort,
-                  color: _selectedPage == Page.dashboard ? active : notActive,
+                  color: _selectedPage == Page.manage ? active : notActive,
                 ),
                 label: Text("Manage"),
               ),
