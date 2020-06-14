@@ -208,11 +208,7 @@ class _AdminPanelState extends State<AdminPanel> {
               title: Text("Add product"),
               onTap: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => AddProduct(),
-                  ),
-                );
+                    context, MaterialPageRoute(builder: (_) => AddProduct()));
               },
             ),
             Divider(),
