@@ -30,8 +30,7 @@ class _AddProductState extends State<AddProduct> {
       <DropdownMenuItem<String>>[];
   List<DropdownMenuItem<String>> brandsDropDown = <DropdownMenuItem<String>>[];
   File _fileImage1;
-  File _fileImage2;
-  File _fileImage3;
+
   bool isLoading = false;
 
   Color white = Colors.white;
@@ -39,6 +38,8 @@ class _AddProductState extends State<AddProduct> {
   Color black = Colors.black;
   Color grey = Colors.grey;
   List<String> selectedSizes = <String>[];
+  bool onSale = false;
+  bool featured = false;
 
   String _currentCategory;
   String _currentBrand;
@@ -68,15 +69,17 @@ class _AddProductState extends State<AddProduct> {
   List<DropdownMenuItem<String>> getBrandsDropdown() {
     List<DropdownMenuItem<String>> items = new List();
     for (int i = 0; i < brands.length; i++) {
-      setState(() {
-        items.insert(
-          0,
-          DropdownMenuItem(
-            child: Text(brands[i]['brand']),
-            value: brands[i].data['brand'],
-          ),
-        );
-      });
+      setState(
+        () {
+          items.insert(
+            0,
+            DropdownMenuItem(
+              child: Text(brands[i]['brand']),
+              value: brands[i].data['brand'],
+            ),
+          );
+        },
+      );
     }
     return items;
   }
@@ -106,7 +109,7 @@ class _AddProductState extends State<AddProduct> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Expanded(
+                          Container(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: OutlineButton(
@@ -124,42 +127,6 @@ class _AddProductState extends State<AddProduct> {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlineButton(
-                                borderSide: BorderSide(
-                                  color: grey.withOpacity(0.5),
-                                  width: 2.5,
-                                ),
-                                onPressed: () {
-                                  _selectImage(
-                                      ImagePicker.pickImage(
-                                          source: ImageSource.gallery),
-                                      2);
-                                },
-                                child: _displayChild2(),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: OutlineButton(
-                                borderSide: BorderSide(
-                                  color: grey.withOpacity(0.5),
-                                  width: 2.5,
-                                ),
-                                onPressed: () {
-                                  _selectImage(
-                                      ImagePicker.pickImage(
-                                          source: ImageSource.gallery),
-                                      3);
-                                },
-                                child: _displayChild3(),
-                              ),
-                            ),
-                          )
                         ],
                       ),
                       Padding(
@@ -173,89 +140,205 @@ class _AddProductState extends State<AddProduct> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: TextFormField(
-                          controller: _productNameController,
-                          decoration: InputDecoration(
-                            labelText: 'Product name',
-                          ),
-                          // ignore: missing_return
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'You must enter product name';
-                              // ignore: missing_return
-                            } else if (value.length > 10) {
-                              return 'Product name can not have more than 10 letters';
-                            }
-                          },
-                        ),
+                      Text(
+                        'Available colors',
                       ),
-
-                      /** SELECT CATEGORY & BRAND **/
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Category: ',
-                              style: TextStyle(color: deepOrange),
+                            child: InkWell(
+                              onTap: () {
+                                if (productProvider.selectedColors
+                                    .contains('red')) {
+                                  productProvider.removeColor('red');
+                                } else {
+                                  productProvider.addColors('red');
+                                }
+                                setState(() {
+                                  colors = productProvider.selectedColors;
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: productProvider.selectedColors
+                                            .contains('red')
+                                        ? Colors.blue
+                                        : grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                          DropdownButton(
-                            items: categoriesDropDown,
-                            onChanged: changeSelectedCategory,
-                            value: _currentCategory,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Brand: ',
-                              style: TextStyle(color: deepOrange),
+                            child: InkWell(
+                              onTap: () {
+                                if (productProvider.selectedColors
+                                    .contains('yellow')) {
+                                  productProvider.removeColor('yellow');
+                                } else {
+                                  productProvider.addColors('yellow');
+                                }
+                                setState(() {
+                                  colors = productProvider.selectedColors;
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: productProvider.selectedColors
+                                            .contains('yellow')
+                                        ? red
+                                        : grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.yellow,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          DropdownButton(
-                            items: brandsDropDown,
-                            onChanged: changeSelectedBrand,
-                            value: _currentBrand,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                if (productProvider.selectedColors
+                                    .contains('blue')) {
+                                  productProvider.removeColor('blue');
+                                } else {
+                                  productProvider.addColors('blue');
+                                }
+                                setState(() {
+                                  colors = productProvider.selectedColors;
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: productProvider.selectedColors
+                                            .contains('blue')
+                                        ? red
+                                        : grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                if (productProvider.selectedColors
+                                    .contains('green')) {
+                                  productProvider.removeColor('green');
+                                } else {
+                                  productProvider.addColors('green');
+                                }
+                                setState(() {
+                                  colors = productProvider.selectedColors;
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: productProvider.selectedColors
+                                            .contains('green')
+                                        ? red
+                                        : grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                if (productProvider.selectedColors
+                                    .contains('white')) {
+                                  productProvider.removeColor('white');
+                                } else {
+                                  productProvider.addColors('white');
+                                }
+                                setState(() {
+                                  colors = productProvider.selectedColors;
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: productProvider.selectedColors
+                                            .contains('white')
+                                        ? red
+                                        : grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: CircleAvatar(
+                                    backgroundColor: white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                if (productProvider.selectedColors
+                                    .contains('black')) {
+                                  productProvider.removeColor('black');
+                                } else {
+                                  productProvider.addColors('black');
+                                }
+                                setState(() {
+                                  colors = productProvider.selectedColors;
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: productProvider.selectedColors
+                                            .contains('black')
+                                        ? red
+                                        : grey,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: CircleAvatar(
+                                    backgroundColor: black,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
-                      ),
-                      /** END SELECT CATEGORY & BRAND **/
-
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: TextFormField(
-                          controller: _quantityController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            labelText: 'Quantity',
-                          ),
-                          // ignore: missing_return
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'You must enter product quantity';
-                              // ignore: missing_return
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: TextFormField(
-                          controller: _priceController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            labelText: 'Price',
-                          ),
-                          // ignore: missing_return
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'You must enter product price';
-                              // ignore: missing_return
-                            }
-                          },
-                        ),
                       ),
                       Text("Available sizes"),
                       Row(
@@ -360,6 +443,90 @@ class _AddProductState extends State<AddProduct> {
                           Text('50'),
                         ],
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          controller: _productNameController,
+                          decoration: InputDecoration(
+                            labelText: 'Product name',
+                          ),
+                          // ignore: missing_return
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'You must enter product name';
+                              // ignore: missing_return
+                            } else if (value.length > 10) {
+                              return 'Product name can not have more than 10 letters';
+                            }
+                          },
+                        ),
+                      ),
+
+                      /** SELECT CATEGORY & BRAND **/
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Category: ',
+                              style: TextStyle(color: deepOrange),
+                            ),
+                          ),
+                          DropdownButton(
+                            items: categoriesDropDown,
+                            onChanged: changeSelectedCategory,
+                            value: _currentCategory,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Brand: ',
+                              style: TextStyle(color: deepOrange),
+                            ),
+                          ),
+                          DropdownButton(
+                            items: brandsDropDown,
+                            onChanged: changeSelectedBrand,
+                            value: _currentBrand,
+                          ),
+                        ],
+                      ),
+                      /** END SELECT CATEGORY & BRAND **/
+
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          controller: _quantityController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Quantity',
+                          ),
+                          // ignore: missing_return
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'You must enter product quantity';
+                              // ignore: missing_return
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          controller: _priceController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Price',
+                          ),
+                          // ignore: missing_return
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'You must enter product price';
+                              // ignore: missing_return
+                            }
+                          },
+                        ),
+                      ),
                       FlatButton(
                         onPressed: () {
                           validateAndUpload();
@@ -418,23 +585,14 @@ class _AddProductState extends State<AddProduct> {
 
   void _selectImage(Future<File> pickImage, int imageNumber) async {
     File tempImg = await pickImage;
-    switch (imageNumber) {
-      case 1:
-        setState(() => _fileImage1 = tempImg);
-        break;
-      case 2:
-        setState(() => _fileImage2 = tempImg);
-        break;
-      case 3:
-        setState(() => _fileImage3 = tempImg);
-        break;
-    }
+
+    setState(() => _fileImage1 = tempImg);
   }
 
   Widget _displayChild1() {
     if (_fileImage1 == null) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(14.0, 50.0, 14.0, 50.0),
+        padding: const EdgeInsets.fromLTRB(14.0, 70.0, 14.0, 70.0),
         child: Icon(
           Icons.add,
           color: grey,
@@ -449,94 +607,49 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-  Widget _displayChild2() {
-    if (_fileImage2 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(14.0, 50.0, 14.0, 50.0),
-        child: Icon(
-          Icons.add,
-          color: grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _fileImage2,
-        fit: BoxFit.fill,
-        width: double.infinity,
-      );
-    }
-  }
-
-  Widget _displayChild3() {
-    if (_fileImage3 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(14.0, 50.0, 14.0, 50.0),
-        child: Icon(
-          Icons.add,
-          color: grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _fileImage3,
-        fit: BoxFit.fill,
-        width: double.infinity,
-      );
-    }
-  }
-
   void validateAndUpload() async {
     if (_formKey.currentState.validate()) {
       setState(() => isLoading = true);
-      if (_fileImage1 != null && _fileImage2 != null && _fileImage3 != null) {
+      if (_fileImage1 != null) {
         if (selectedSizes.isNotEmpty) {
           String imageUrl1;
-          String imageUrl2;
-          String imageUrl3;
+
           final FirebaseStorage storage = FirebaseStorage.instance;
           final String picture1 =
               "1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
           StorageUploadTask task1 =
-              storage.ref().child(picture1).putFile(_fileImage1);
-          final String picture2 =
-              "2${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
-          StorageUploadTask task2 =
-              storage.ref().child(picture2).putFile(_fileImage2);
-          final String picture3 =
-              "3${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
-          StorageUploadTask task3 =
-              storage.ref().child(picture3).putFile(_fileImage3);
+          storage.ref().child(picture1).putFile(_fileImage1);
+
           StorageTaskSnapshot snapshot1 =
-              await task1.onComplete.then((snapshot) => snapshot);
-          StorageTaskSnapshot snapshot2 =
-              await task2.onComplete.then((snapshot) => snapshot);
+          await task1.onComplete.then((snapshot) => snapshot);
 
-          task3.onComplete.then((snapshot3) async {
+
+          task1.onComplete.then((snapshot3) async {
             imageUrl1 = await snapshot1.ref.getDownloadURL();
-            imageUrl2 = await snapshot2.ref.getDownloadURL();
-            imageUrl3 = await snapshot3.ref.getDownloadURL();
 
-            List<String> imageList = [imageUrl1, imageUrl2, imageUrl3];
-
-            productService.uploadProduct(
-              productName: _productNameController.text,
-              price: double.parse(_priceController.text),
-              sizes: selectedSizes,
-              images: imageList,
-              quantity: int.parse(_quantityController.text),
-            );
+            productService.uploadProduct({
+              "name":productNameController.text,
+              "price":double.parse(priceController.text),
+              "sizes":selectedSizes,
+              "colors": colors,
+              "picture":imageUrl1,
+              "quantity":int.parse(quatityController.text),
+              "brand":_currentBrand,
+              "category":_currentCategory,
+              'sale':onSale,
+              'featured':featured
+            });
             _formKey.currentState.reset();
             setState(() => isLoading = false);
-            Fluttertoast.showToast(msg: 'Product added successfully');
             Navigator.pop(context);
           });
         } else {
           setState(() => isLoading = false);
-          Fluttertoast.showToast(msg: 'Select at least one size');
         }
       } else {
         setState(() => isLoading = false);
-        Fluttertoast.showToast(msg: 'All images are required!');
+
+//        Fluttertoast.showToast(msg: 'all the images must be provided');
       }
     }
   }
