@@ -13,7 +13,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   List<charts.Series<Task, String>> _seriesPieData;
 
-  _getData(){
+  _getData() {
     var piedata = [
       new Task('Girls', 35.8, Color(0xff3366cc)),
       new Task('Women', 8.3, Color(0xff990099)),
@@ -49,25 +49,27 @@ class _DashboardState extends State<Dashboard> {
     final appState = Provider.of<AppState>(context);
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: SafeArea(child: Row(
+      body: SafeArea(
+          child: Row(
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey[400],
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 4
-                  )
-                ]
-            ),
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                  color: Colors.grey[400],
+                  offset: Offset(1.0, 1.0),
+                  blurRadius: 4)
+            ]),
             width: 50,
             child: Column(
               children: <Widget>[
-                IconButton(icon: Icon(Icons.menu, color: Colors.black,), onPressed: (){}),
+                IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {}),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     appState.changeScreen(Screen.DASH);
                   },
                   child: Wrap(
@@ -75,9 +77,10 @@ class _DashboardState extends State<Dashboard> {
                     children: <Widget>[
                       RotatedBox(
                         quarterTurns: -1,
-                        child: Text('Dashboard',),
+                        child: Text(
+                          'Dashboard',
+                        ),
                       ),
-
                       Visibility(
                         visible: appState.selectedScreen == Screen.DASH,
                         child: Wrap(
@@ -90,11 +93,9 @@ class _DashboardState extends State<Dashboard> {
                               width: 5,
                               color: Colors.black,
                             )
-
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -102,19 +103,20 @@ class _DashboardState extends State<Dashboard> {
                   height: 15,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     appState.changeScreen(Screen.PRODUCTS);
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>AddProduct()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => AddProduct()));
                   },
                   child: Wrap(
                     direction: Axis.horizontal,
                     children: <Widget>[
                       RotatedBox(
                         quarterTurns: -1,
-                        child: Text('Products',),
-
+                        child: Text(
+                          'Products',
+                        ),
                       ),
-
                       Visibility(
                         visible: appState.selectedScreen == Screen.PRODUCTS,
                         child: Wrap(
@@ -127,7 +129,6 @@ class _DashboardState extends State<Dashboard> {
                               width: 5,
                               color: Colors.black,
                             )
-
                           ],
                         ),
                       ),
@@ -138,7 +139,7 @@ class _DashboardState extends State<Dashboard> {
                   height: 15,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     appState.changeScreen(Screen.CATEGORIES);
                   },
                   child: Wrap(
@@ -146,7 +147,9 @@ class _DashboardState extends State<Dashboard> {
                     children: <Widget>[
                       RotatedBox(
                         quarterTurns: -1,
-                        child: Text('Categories',),
+                        child: Text(
+                          'Categories',
+                        ),
                       ),
                       Visibility(
                         visible: appState.selectedScreen == Screen.CATEGORIES,
@@ -160,7 +163,6 @@ class _DashboardState extends State<Dashboard> {
                               width: 5,
                               color: Colors.black,
                             )
-
                           ],
                         ),
                       ),
@@ -170,9 +172,8 @@ class _DashboardState extends State<Dashboard> {
                 SizedBox(
                   height: 15,
                 ),
-
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     appState.changeScreen(Screen.BRANDS);
                   },
                   child: Wrap(
@@ -180,9 +181,10 @@ class _DashboardState extends State<Dashboard> {
                     children: <Widget>[
                       RotatedBox(
                         quarterTurns: -1,
-                        child: Text('Brands',),
+                        child: Text(
+                          'Brands',
+                        ),
                       ),
-
                       Visibility(
                         visible: appState.selectedScreen == Screen.BRANDS,
                         child: Wrap(
@@ -195,7 +197,6 @@ class _DashboardState extends State<Dashboard> {
                               width: 5,
                               color: Colors.black,
                             )
-
                           ],
                         ),
                       ),
@@ -207,7 +208,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: (){
+                    onTap: () {
                       appState.changeScreen(Screen.ORDERS);
                     },
                     child: Wrap(
@@ -215,7 +216,9 @@ class _DashboardState extends State<Dashboard> {
                       children: <Widget>[
                         RotatedBox(
                           quarterTurns: -1,
-                          child: Text('Orders',),
+                          child: Text(
+                            'Orders',
+                          ),
                         ),
                         Visibility(
                           visible: appState.selectedScreen == Screen.ORDERS,
@@ -229,7 +232,6 @@ class _DashboardState extends State<Dashboard> {
                                 width: 5,
                                 color: Colors.black,
                               )
-
                             ],
                           ),
                         ),
@@ -237,9 +239,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-
-                IconButton(icon: Icon(Icons.open_in_new), onPressed: (){})
-
+                IconButton(icon: Icon(Icons.open_in_new), onPressed: () {})
               ],
             ),
           ),
@@ -250,32 +250,64 @@ class _DashboardState extends State<Dashboard> {
                 padding: const EdgeInsets.all(10),
                 child: RichText(
                   text: TextSpan(children: [
-                    TextSpan(text: 'Revenue\n', style: TextStyle(fontSize: 35, color: Colors.grey)),
-                    TextSpan(text: '\$1287.99', style: TextStyle(fontSize: 55, color: Colors.black, fontWeight: FontWeight.w300)),
-
+                    TextSpan(
+                        text: 'Revenue\n',
+                        style: TextStyle(fontSize: 35, color: Colors.grey)),
+                    TextSpan(
+                        text: '\$1287.99',
+                        style: TextStyle(
+                            fontSize: 55,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300)),
                   ]),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  SmallCard(color2: Colors.indigo,color1: Colors.blue, icon: Icons.person_outline, value: 1265, title: 'Users',),
-                  SmallCard(color2: Colors.indigo,color1: Colors.blue, icon: Icons.shopping_cart, value: 30, title: 'Orders',),
+                  SmallCard(
+                    color2: Colors.indigo,
+                    color1: Colors.blue,
+                    icon: Icons.person_outline,
+                    value: 1265,
+                    title: 'Users',
+                  ),
+                  SmallCard(
+                    color2: Colors.indigo,
+                    color1: Colors.blue,
+                    icon: Icons.shopping_cart,
+                    value: 30,
+                    title: 'Orders',
+                  ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  SmallCard(color2: Colors.black87,color1: Colors.black87, icon: Icons.attach_money, value: 65, title: 'Sales',),
-                  SmallCard(color2: Colors.black,color1: Colors.black87, icon: Icons.shopping_basket, value: 230, title: 'Stock',),
+                  SmallCard(
+                    color2: Colors.black87,
+                    color1: Colors.black87,
+                    icon: Icons.attach_money,
+                    value: 65,
+                    title: 'Sales',
+                  ),
+                  SmallCard(
+                    color2: Colors.black,
+                    color1: Colors.black87,
+                    icon: Icons.shopping_basket,
+                    value: 230,
+                    title: 'Stock',
+                  ),
                 ],
               ),
-
               Padding(
                 padding: const EdgeInsets.only(left: 10),
-                child: Text('Sales per category', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),),
+                child: Text(
+                  'Sales per category',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
-
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -287,35 +319,34 @@ class _DashboardState extends State<Dashboard> {
                           BoxShadow(
                               color: Colors.grey[400],
                               offset: Offset(1.0, 1.0),
-                              blurRadius: 4
-                          )
-                        ]
-                    ),
+                              blurRadius: 4)
+                        ]),
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: ListTile(
-                      title: charts.PieChart(
-                          _seriesPieData,
+                      title: charts.PieChart(_seriesPieData,
                           animate: true,
                           animationDuration: Duration(seconds: 3),
                           behaviors: [
                             new charts.DatumLegend(
-                              outsideJustification: charts.OutsideJustification.endDrawArea,
+                              outsideJustification:
+                                  charts.OutsideJustification.endDrawArea,
                               horizontalFirst: false,
                               desiredMaxRows: 2,
-                              cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+                              cellPadding:
+                                  new EdgeInsets.only(right: 4.0, bottom: 4.0),
                             )
                           ],
                           defaultRenderer: new charts.ArcRendererConfig(
                               arcWidth: 30,
                               arcRendererDecorators: [
                                 new charts.ArcLabelDecorator(
-                                    labelPosition: charts.ArcLabelPosition.inside)
+                                    labelPosition:
+                                        charts.ArcLabelPosition.inside)
                               ])),
                     ),
                   ),
                 ),
               )
-
             ],
           )
         ],

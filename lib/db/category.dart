@@ -7,21 +7,26 @@ class CategoryService {
   String ref = 'Categories';
 
   void createCategory(String name) {
-    var id = new Uuid();
+    var id = Uuid();
     String categoryId = id.v1();
+
     _firestore.collection(ref).document(categoryId).setData({'category': name});
   }
 
-  Future<List<DocumentSnapshot>> categoriesList() =>
-      _firestore.collection(ref).getDocuments().then((snaps) {
-        return snaps.documents;
-      });
+  Future<List<DocumentSnapshot>> getCategories() =>
+      _firestore.collection(ref).getDocuments().then(
+        (snaps) {
+          return snaps.documents;
+        },
+      );
 
-  Future<List<DocumentSnapshot>> getSuggestion(String suggestion) => _firestore
+  Future<List<DocumentSnapshot>> getSuggestions(String suggestion) => _firestore
           .collection(ref)
           .where('category', isEqualTo: suggestion)
           .getDocuments()
-          .then((snap) {
-        return snap.documents;
-      });
+          .then(
+        (snap) {
+          return snap.documents;
+        },
+      );
 }
