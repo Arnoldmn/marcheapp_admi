@@ -8,6 +8,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:marcheappadmi/db/product.dart';
+import 'package:marcheappadmi/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 import '../db/category.dart';
 import '../db/brand.dart';
 
@@ -37,7 +39,9 @@ class _AddProductState extends State<AddProduct> {
   Color deepOrange = Colors.deepOrange;
   Color black = Colors.black;
   Color grey = Colors.grey;
+  Color red = Colors.red;
   List<String> selectedSizes = <String>[];
+  List<String> colors = <String>[];
   bool onSale = false;
   bool featured = false;
 
@@ -68,6 +72,7 @@ class _AddProductState extends State<AddProduct> {
 
   List<DropdownMenuItem<String>> getBrandsDropdown() {
     List<DropdownMenuItem<String>> items = new List();
+
     for (int i = 0; i < brands.length; i++) {
       setState(
         () {
@@ -86,6 +91,7 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.1,
@@ -618,26 +624,25 @@ class _AddProductState extends State<AddProduct> {
           final String picture1 =
               "1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
           StorageUploadTask task1 =
-          storage.ref().child(picture1).putFile(_fileImage1);
+              storage.ref().child(picture1).putFile(_fileImage1);
 
           StorageTaskSnapshot snapshot1 =
-          await task1.onComplete.then((snapshot) => snapshot);
-
+              await task1.onComplete.then((snapshot) => snapshot);
 
           task1.onComplete.then((snapshot3) async {
             imageUrl1 = await snapshot1.ref.getDownloadURL();
 
             productService.uploadProduct({
-              "name":productNameController.text,
-              "price":double.parse(priceController.text),
-              "sizes":selectedSizes,
+              "name": productNameController.text,
+              "price": double.parse(priceController.text),
+              "sizes": selectedSizes,
               "colors": colors,
-              "picture":imageUrl1,
-              "quantity":int.parse(quatityController.text),
-              "brand":_currentBrand,
-              "category":_currentCategory,
-              'sale':onSale,
-              'featured':featured
+              "picture": imageUrl1,
+              "quantity": int.parse(quatityController.text),
+              "brand": _currentBrand,
+              "category": _currentCategory,
+              'sale': onSale,
+              'featured': featured
             });
             _formKey.currentState.reset();
             setState(() => isLoading = false);
