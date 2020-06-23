@@ -633,12 +633,12 @@ class _AddProductState extends State<AddProduct> {
             imageUrl1 = await snapshot1.ref.getDownloadURL();
 
             productService.uploadProduct({
-              "name": productNameController.text,
-              "price": double.parse(priceController.text),
+              "name": _productNameController.text,
+              "price": double.parse(_priceController.text),
               "sizes": selectedSizes,
               "colors": colors,
               "picture": imageUrl1,
-              "quantity": int.parse(quatityController.text),
+              "quantity": int.parse(_quantityController.text),
               "brand": _currentBrand,
               "category": _currentCategory,
               'sale': onSale,
