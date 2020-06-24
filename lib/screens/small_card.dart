@@ -41,6 +41,37 @@ class _SmallCardState extends State<SmallCard> {
                 ),
               ],
             ),
+          ),
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    widget.icon,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              Text(
+                widget.value.toString(),
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                ),
+              )
+            ],
           )
         ],
       ),
