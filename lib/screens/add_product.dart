@@ -481,9 +481,9 @@ class _AddProductState extends State<AddProduct> {
                     ),
 
                     FlatButton(
-                      color: red,
+                      color: Colors.blueGrey[400],
                       textColor: white,
-                      child: Text('add product'),
+                      child: Text('Add product'),
                       onPressed: () {
                         validateAndUpload();
                       },
@@ -599,7 +599,7 @@ class _AddProductState extends State<AddProduct> {
       } else {
         setState(() => isLoading = false);
 
-//        Fluttertoast.showToast(msg: 'all the images must be provided');
+        Fluttertoast.showToast(msg: 'image must be provided');
       }
     }
   }

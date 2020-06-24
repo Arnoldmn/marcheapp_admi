@@ -27,18 +27,20 @@ class _SmallCardState extends State<SmallCard> {
         children: <Widget>[
           Container(
             width: 160,
-            height: 120,
+            height: 140,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                gradient: LinearGradient(
-                  colors: [widget.color1, widget.color2],
+              borderRadius: BorderRadius.circular(15.0),
+              gradient: LinearGradient(
+                colors: [widget.color1, widget.color2],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400],
+                  offset: Offset(1.0, 1.0),
+                  blurRadius: 4,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.blueGrey[400],
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 4)
-                ]),
+              ],
+            ),
           )
         ],
       ),

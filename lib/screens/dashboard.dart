@@ -63,11 +63,12 @@ class _DashboardState extends State<Dashboard> {
             child: Column(
               children: <Widget>[
                 IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {}),
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {},
+                ),
                 InkWell(
                   onTap: () {
                     appState.changeScreen(Screen.DASH);
@@ -239,45 +240,53 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-                IconButton(icon: Icon(Icons.open_in_new), onPressed: () {})
+                IconButton(
+                  icon: Icon(Icons.open_in_new),
+                  onPressed: () {},
+                )
               ],
             ),
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(10),
-                child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: 'Revenue\n',
-                        style: TextStyle(fontSize: 35, color: Colors.grey)),
-                    TextSpan(
-                        text: '\$1287.99',
-                        style: TextStyle(
-                            fontSize: 55,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300)),
-                  ]),
+                padding: const EdgeInsets.only(
+                    left: 10, top: 10, bottom: 10, right: 10),
+                child: Card(
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: 'Revenue\n',
+                            style: TextStyle(fontSize: 35, color: Colors.grey)),
+                        TextSpan(
+                          text: '\$1287.99',
+                          style: TextStyle(
+                              fontSize: 55,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   SmallCard(
-                    color2: Colors.indigo,
-                    color1: Colors.blue,
                     icon: Icons.person_outline,
-                    value: 1265,
                     title: 'Users',
+                    value: 1265,
+                    color1: Colors.blue,
+                    color2: Colors.indigo,
                   ),
                   SmallCard(
-                    color2: Colors.indigo,
-                    color1: Colors.blue,
                     icon: Icons.shopping_cart,
-                    value: 30,
                     title: 'Orders',
+                    value: 30,
+                    color1: Colors.blue,
+                    color2: Colors.indigo,
                   ),
                 ],
               ),
@@ -285,18 +294,18 @@ class _DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   SmallCard(
-                    color2: Colors.black87,
-                    color1: Colors.black87,
                     icon: Icons.attach_money,
-                    value: 65,
                     title: 'Sales',
+                    value: 65,
+                    color1: Colors.blue,
+                    color2: Colors.indigo,
                   ),
                   SmallCard(
-                    color2: Colors.black,
-                    color1: Colors.black87,
                     icon: Icons.shopping_basket,
-                    value: 230,
                     title: 'Stock',
+                    value: 230,
+                    color1: Colors.blue,
+                    color2: Colors.indigo,
                   ),
                 ],
               ),
@@ -323,26 +332,28 @@ class _DashboardState extends State<Dashboard> {
                         ]),
                     width: MediaQuery.of(context).size.width / 1.2,
                     child: ListTile(
-                      title: charts.PieChart(_seriesPieData,
-                          animate: true,
-                          animationDuration: Duration(seconds: 3),
-                          behaviors: [
-                            new charts.DatumLegend(
-                              outsideJustification:
-                                  charts.OutsideJustification.endDrawArea,
-                              horizontalFirst: false,
-                              desiredMaxRows: 2,
-                              cellPadding:
-                                  new EdgeInsets.only(right: 4.0, bottom: 4.0),
-                            )
+                      title: charts.PieChart(
+                        _seriesPieData,
+                        animate: true,
+                        animationDuration: Duration(seconds: 3),
+                        behaviors: [
+                          new charts.DatumLegend(
+                            outsideJustification:
+                                charts.OutsideJustification.endDrawArea,
+                            horizontalFirst: false,
+                            desiredMaxRows: 2,
+                            cellPadding:
+                                new EdgeInsets.only(right: 8.0, bottom: 8.0),
+                          )
+                        ],
+                        defaultRenderer: new charts.ArcRendererConfig(
+                          arcWidth: 30,
+                          arcRendererDecorators: [
+                            new charts.ArcLabelDecorator(
+                                labelPosition: charts.ArcLabelPosition.inside)
                           ],
-                          defaultRenderer: new charts.ArcRendererConfig(
-                              arcWidth: 30,
-                              arcRendererDecorators: [
-                                new charts.ArcLabelDecorator(
-                                    labelPosition:
-                                        charts.ArcLabelPosition.inside)
-                              ])),
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 
 class ProductService {
   Firestore _firestore = Firestore.instance;
-  String ref = 'products';
+  String ref = 'Products';
 
   void uploadProduct(Map<String, dynamic> data) {
     var id = Uuid();
